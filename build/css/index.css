@@ -1,0 +1,100 @@
+@import "../../bower_components/normalize.css/normalize.css";
+html {
+  font-size: 62.5%;
+}
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+  html {
+    font-size: 50%;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2) {
+  html {
+    font-size: 43.75%;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 3) {
+  html {
+    font-size: 43.75%;
+  }
+}
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#overlay {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1d5a45;
+}
+#overlay p {
+  width: 30rem;
+  margin: auto;
+  font-size: 5rem;
+  color: #e7b541;
+  text-align: center;
+  animation: pulse 2.5s infinite;
+}
+@-moz-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@-o-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
