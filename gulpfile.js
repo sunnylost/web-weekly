@@ -21,6 +21,7 @@ gulp.task( 'scripts', function() {
     gulp.src( paths.src.scripts )
         .pipe( sourcemaps.init() )
         .pipe( to5() )
+        .pipe( concat( 'index.js' ) )
         .pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( paths.build.scripts ) )
         .pipe( livereload() )
