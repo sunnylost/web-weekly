@@ -27,7 +27,6 @@ gulp.task( 'scripts', function() {
         .pipe( livereload() )
 })
 
-
 gulp.task( 'stylus', function() {
     gulp.src( paths.src.styles )
         .pipe( sourcemaps.init() )
