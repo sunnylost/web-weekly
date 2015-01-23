@@ -1,0 +1,24 @@
+{
+  "name": "web-weekly",
+  "version": "0.0.1",
+  "authors": [
+    "sunnylost <sunnylost@gmail.com>"
+  ],
+  "description": "collect news about web.",
+  "main": "index.html",
+  "keywords": [
+    "weekly"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.2"
+  }
+}
