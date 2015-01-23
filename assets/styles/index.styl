@@ -28,6 +28,7 @@ html, body
   width 100%
   height 100%
   background-color #1d5a45
+  transition all 1.5s
 
   p
     width 30rem
@@ -37,6 +38,10 @@ html, body
     text-align center
     animation pulse 2.5s infinite
 
+.hide
+  opacity 0
+  pointer-events none
+
 @keyframes pulse
   0%
     opacity ( .3 )
@@ -44,7 +49,7 @@ html, body
 
   50%
     opacity ( 1 )
-    transform scale( 1.5 )
+    transform scale( 1 )
 
   100%
     opacity ( .3 )

@@ -10,11 +10,4 @@
     }
   };
 })(window);
-"use strict";
-
-~(function () {
-  setTimeout(function () {
-    document.getElementById("overlay").classList.add("hide");
-  }, 1000);
-})();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=base.js.map
