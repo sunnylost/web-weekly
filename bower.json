@@ -19,6 +19,6 @@
     "tests"
   ],
   "dependencies": {
-    "normalize.css": "~3.0.2"
+    "normalize.styl": "~3.0.2"
   }
 }
