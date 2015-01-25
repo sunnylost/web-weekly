@@ -1,0 +1,83 @@
+#overlay {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1d5a45;
+  transition: all 1.5s;
+}
+#overlay p {
+  width: 30rem;
+  margin: auto;
+  font-size: 5rem;
+  color: #e7b541;
+  text-align: center;
+  animation: pulse 2.5s infinite;
+}
+#overlay.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+#overlay.hide p {
+  animation: none;
+}
+@-moz-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@-o-keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+
+/*# sourceMappingURL=overlay.css.map */

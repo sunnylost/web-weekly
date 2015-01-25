@@ -1,0 +1,43 @@
+#logo {
+  position: relative;
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+  color: font-color;
+  text-indent: -999rem;
+  transition: all 0.5s;
+}
+#logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid;
+  border-radius: 50%;
+}
+#logo::before {
+  content: "W";
+  position: absolute;
+  left: 0.6rem;
+  top: 0.5rem;
+  width: 4rem;
+  height: 5rem;
+  line-height: 5rem;
+  font-size: 3.5rem;
+  text-indent: 0;
+  text-align: center;
+}
+#logo:hover {
+  transform: rotateY(180deg);
+}
+#logo:hover::before {
+  color: bg-color;
+  z-index: 1;
+}
+#logo:hover::after {
+  background-color: font-color;
+}
+
+/*# sourceMappingURL=logo.css.map */

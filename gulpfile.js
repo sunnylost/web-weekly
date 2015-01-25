@@ -4,6 +4,8 @@ var gulp       = require( 'gulp' ),
     stylus     = require( 'gulp-stylus' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     livereload = require( 'gulp-livereload' ),
+    gutil      = require( 'gulp-util' ),
+    markdown   = require( 'gulp-markdown-to-json' ),
 
     paths = {
         src: {
