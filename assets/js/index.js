@@ -1,5 +1,9 @@
-~function() {
+~function( global ) {
+    "use strict"
+
+    let $ = global.$
+
     setTimeout( () => {
-        document.getElementById( 'overlay' ).classList.add( 'hide' )
+        $( '#overlay' )[ 0 ].classList.add( 'hide' )
     }, 1000 )
-}()
+}( window )
