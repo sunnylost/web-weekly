@@ -7,57 +7,56 @@ ul {
   padding: 0;
   margin: 0 0 30px 20px;
 }
-#wrap {
+article {
   width: 650px;
   margin: auto;
   padding: 2rem;
   background-color: #fff;
-  border: 1px solid #e7b541;
 }
-#wrap h2:first-type {
+article h2:first-type {
   padding: 0;
   border-top: 0;
 }
-#wrap ul {
+article ul {
   padding-bottom: 15px;
   border-bottom: 1px dashed #e7b541;
 }
-h1 {
+article h1 {
   height: 40px;
   line-height: 40px;
   padding: 5px 10px;
   color: #e7b541;
   background-color: #1d5a45;
 }
-h1 em {
+article h1 em {
   float: right;
   font-style: normal;
   font-size: 18px;
 }
-h2 {
+article h2 {
   padding-top: 15px;
   color: #e7b541;
   font-weight: normal;
 }
-li {
+article li {
   font-size: 16px;
   margin-bottom: 10px;
   line-height: 1.4;
   list-style-type: square;
 }
-a {
+article a {
   padding: 3px;
 }
-a:hover {
+article a:hover {
   color: #e7b541;
   background-color: #1d5a45;
   text-decoration: none;
 }
-a:hover code {
+article a:hover code {
   color: #e7b541;
   background-color: #1d5a45;
 }
-code {
+article code {
   font-family: monospace, monospace;
   font-size: 85%;
   padding: 0.3em 0.5em;
@@ -67,4 +66,4 @@ code {
   background-color: #c2606f;
 }
 
-/*# sourceMappingURL=email.css.map */
+/*# sourceMappingURL=issue.css.map */
