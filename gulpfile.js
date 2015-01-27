@@ -60,15 +60,15 @@ gulp.task( 'watch', function() {
 })
 
 gulp.task( 'convert', function() {
-    gulp.src( paths.src.markdown )
+    return gulp.src( paths.src.markdown )
         .pipe( markdown() )
         .pipe( gulp.dest( paths.indeterminate.markdown ) )
 })
 
-gulp.task( 'email', function() {
+gulp.task( 'email', [ 'convert' ], function() {
     var mdFile = mdName + '.html'
 
-    gulp.src( 'assets/tmpl/email.jade' )
+    return gulp.src( 'assets/tmpl/email.jade' )
         .pipe( data(function() {
             return {
                 pageTitle: 'Web Weekly',
@@ -84,3 +84,5 @@ gulp.task( 'email', function() {
 })
 
 gulp.task( 'default', [ 'watch', 'scripts', 'stylus' ] )
+
+gulp.task( 'make', [ 'convert', 'email' ] )
