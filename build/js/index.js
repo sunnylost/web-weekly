@@ -21,16 +21,16 @@
 ~(function (global) {
   "use strict";
 
-  var $ = global.$;
+  var $ = global.$,
+      fetch = global.fetch;
 
-  setTimeout(function () {
-    $("#overlay")[0].classList.add("hide");
-  }, 1000);
-
-  global.fetch("contents/indeterminate/2015-01-25.html").then(function (resp) {
+  fetch("contents/indeterminate/2015-01-25.html").then(function (resp) {
     return resp.text();
   }).then(function (html) {
-    return $("#article")[0].innerHTML = html;
+    $("#article")[0].innerHTML = html;
+    setTimeout(function () {
+      return $("#overlay")[0].classList.add("hide");
+    }, 1000);
   });
 })(window);
 //# sourceMappingURL=index.js.map
