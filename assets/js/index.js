@@ -13,6 +13,5 @@
             setTimeout( () =>
                 $( '#overlay' )[ 0 ].classList.add( 'hide' )
             ,1000 )
-
         })
 }( window )

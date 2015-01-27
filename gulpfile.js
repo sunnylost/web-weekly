@@ -7,9 +7,11 @@ var fs         = require( 'fs' ),
     juice      = require( 'gulp-juice' ),
     livereload = require( 'gulp-livereload' ),
     markdown   = require( 'gulp-markdown' ),
+    minifyCSS  = require( 'gulp-minify-css' ),
     rename     = require( 'gulp-rename' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     stylus     = require( 'gulp-stylus' ),
+    uglify     = require( 'gulp-uglify' ),
     dateExtend = require( 'date-extended' ),
     bower      = require( 'main-bower-files' ),
 
@@ -42,10 +44,8 @@ gulp.task( 'scripts', function() {
         fileName = 'index.js'
 
     gulp.src( paths.src.scripts )
-        .pipe( sourcemaps.init() )
         .pipe( to5() )
         .pipe( concat( fileName ) )
-        .pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( dest ) )
         .pipe( livereload() )
 
@@ -56,9 +56,7 @@ gulp.task( 'scripts', function() {
 
 gulp.task( 'stylus', function() {
     gulp.src( paths.src.styles )
-        .pipe( sourcemaps.init() )
         .pipe( stylus() )
-        .pipe( sourcemaps.write( '.' ) )
         .pipe( gulp.dest( paths.build.styles ) )
         .pipe( livereload() )
 })
@@ -97,6 +95,33 @@ gulp.task( 'email', [ 'convert' ], function() {
 gulp.task( 'bower', function() {
     gulp.src( bower() )
         .pipe( gulp.dest( paths.src.lib ) )
+})
+
+gulp.task( 'min', function() {
+    var libDestPath     = paths.build.lib,
+        scriptsDestPath = paths.build.scripts,
+        stylsDestPath   = paths.build.styles
+
+    gulp.src( libDestPath + '*.js' )
+        .pipe( rename( 'index.min.js' ) )
+        .pipe( sourcemaps.init() )
+        .pipe( uglify() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( libDestPath ) )
+
+    gulp.src( scriptsDestPath + '*.js' )
+        .pipe( rename( 'index.min.js' ) )
+        .pipe( sourcemaps.init() )
+        .pipe( uglify() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( scriptsDestPath ) )
+
+    gulp.src( stylsDestPath + 'index.css' )
+        .pipe( rename( 'index.min.css' ) )
+        .pipe( sourcemaps.init() )
+        .pipe( minifyCSS() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( stylsDestPath ) )
 })
 
 gulp.task( 'default', [ 'watch', 'scripts', 'stylus' ] )
