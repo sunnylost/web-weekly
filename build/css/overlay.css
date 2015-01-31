@@ -8,76 +8,80 @@
   background-color: #1d5a45;
   transition: all 1.5s;
 }
-#overlay p {
-  width: 30rem;
+#overlay .loading {
+  position: relative;
+  width: 15rem;
+  height: 15rem;
   margin: auto;
-  font-size: 5rem;
-  color: #e7b541;
-  text-align: center;
-  animation: pulse 2.5s infinite;
+  border: 3px solid transparent;
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
 }
-#overlay.hide {
+#overlay .loading::before,
+#overlay .loading::after {
+  content: "";
+  position: absolute;
+  border: 3px solid transparent;
+  border-radius: 50%;
+}
+#overlay .loading::before {
+  left: 1rem;
+  top: 1rem;
+  width: 13rem;
+  height: 13rem;
+  border-top-color: #e74c3c;
+  animation: spin 1.5s linear infinite;
+}
+#overlay .loading::after {
+  top: 2rem;
+  left: 2rem;
+  width: 11rem;
+  height: 11rem;
+  border-top-color: #f9c922;
+  animation: spin 3s linear infinite;
+}
+.loaded,
+.loaded body {
+  height: auto;
+  overflow: auto;
+}
+.loaded #overlay {
   opacity: 0;
   pointer-events: none;
 }
-#overlay.hide p {
+.loaded #overlay .loading {
   animation: none;
 }
-@-moz-keyframes pulse {
+@-moz-keyframes spin {
   0% {
-    opacity: 0.3;
-    transform: scale(0.5);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0.3;
-    transform: scale(0.5);
+    transform: rotate(360deg);
   }
 }
-@-webkit-keyframes pulse {
+@-webkit-keyframes spin {
   0% {
-    opacity: 0.3;
-    transform: scale(0.5);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0.3;
-    transform: scale(0.5);
+    transform: rotate(360deg);
   }
 }
-@-o-keyframes pulse {
+@-o-keyframes spin {
   0% {
-    opacity: 0.3;
-    transform: scale(0.5);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0.3;
-    transform: scale(0.5);
+    transform: rotate(360deg);
   }
 }
-@keyframes pulse {
+@keyframes spin {
   0% {
-    opacity: 0.3;
-    transform: scale(0.5);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   100% {
-    opacity: 0.3;
-    transform: scale(0.5);
+    transform: rotate(360deg);
   }
 }
-
-/*# sourceMappingURL=overlay.css.map */
