@@ -11,7 +11,7 @@
         .then( html => {
             $( '#article' )[ 0 ].innerHTML = html
             setTimeout( () =>
-                $( '#overlay' )[ 0 ].classList.add( 'hide' )
+                $( 'html' )[ 0 ].classList.add( 'loaded' )
             ,1000 )
         })
 }( window )

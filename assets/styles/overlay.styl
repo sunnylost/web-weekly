@@ -8,30 +8,53 @@
   background-color #1d5a45
   transition all 1.5s
 
-  p
-    width 30rem
+  .loading
+    position relative
+    width 15rem
+    height 15rem
     margin auto
-    font-size 5rem
-    color #e7b541
-    text-align center
-    animation pulse 2.5s infinite
+    border 3px solid transparent
+    border-top-color #3498db
+    border-radius 50%
+    animation spin 2s linear infinite
 
-#overlay.hide
-  opacity 0
-  pointer-events none
+    &::before, &::after
+      content ""
+      position absolute
+      border 3px solid transparent
+      border-radius 50%
 
-  p
-    animation none
+    &::before
+      left 1rem
+      top 1rem
+      width 13rem
+      height 13rem
+      border-top-color #e74c3c
+      animation spin 1.5s linear infinite
 
-@keyframes pulse
+    &::after
+      top 2rem
+      left 2rem
+      width 11rem
+      height 11rem
+      border-top-color #f9c922
+      animation spin 3s linear infinite
+
+.loaded
+  &, body
+    height auto
+    overflow auto
+
+  #overlay
+    opacity 0
+    pointer-events none
+
+    .loading
+      animation none
+
+@keyframes spin
   0%
-    opacity ( .3 )
-    transform scale( .5 )
-
-  50%
-    opacity ( 1 )
-    transform scale( 1 )
+    transform rotate( 0deg )
 
   100%
-    opacity ( .3 )
-    transform scale( .5 )
+    transform rotate( 360deg )
