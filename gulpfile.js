@@ -1,6 +1,7 @@
 var fs         = require( 'fs' ),
     gulp       = require( 'gulp' ),
     to5        = require( 'gulp-6to5' ),
+    prefixer   = require( 'gulp-autoprefixer' ),
     concat     = require( 'gulp-concat' ),
     data       = require( 'gulp-data' ),
     jade       = require( 'gulp-jade' ),
@@ -15,7 +16,7 @@ var fs         = require( 'fs' ),
     dateExtend = require( 'date-extended' ),
     bower      = require( 'main-bower-files' ),
 
-    date   = new Date( 2015, 0, 25 ),// need manual edit
+    date   = new Date,// need manual edit
     mdName = dateExtend.format( date, 'yyyy-MM-dd' ),
 
     paths = {
@@ -118,6 +119,10 @@ gulp.task( 'min', function() {
 
     gulp.src( stylsDestPath + 'index.css' )
         .pipe( rename( 'index.min.css' ) )
+        .pipe( prefixer( {
+            browsers: [ 'last 2 versions' ],
+            cascade: false
+        } ))
         .pipe( sourcemaps.init() )
         .pipe( minifyCSS() )
         .pipe( sourcemaps.write( '.' ) )
