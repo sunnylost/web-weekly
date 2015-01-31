@@ -4,6 +4,7 @@ var fs         = require( 'fs' ),
     prefixer   = require( 'gulp-autoprefixer' ),
     concat     = require( 'gulp-concat' ),
     data       = require( 'gulp-data' ),
+    inject     = require( 'gulp-inject' ),
     jade       = require( 'gulp-jade' ),
     juice      = require( 'gulp-juice' ),
     livereload = require( 'gulp-livereload' ),
@@ -40,19 +41,18 @@ var fs         = require( 'fs' ),
         }
     }
 
-gulp.task( 'scripts', function() {
-    var dest     = paths.build.scripts,
-        fileName = 'index.js'
+gulp.task( 'lib', function() {
+    gulp.src( paths.src.jslib )
+        .pipe( concat( 'index.js' ) )
+        .pipe( gulp.dest( paths.build.lib ) )
+})
 
+gulp.task( 'scripts', function() {
     gulp.src( paths.src.scripts )
         .pipe( to5() )
-        .pipe( concat( fileName ) )
-        .pipe( gulp.dest( dest ) )
+        .pipe( concat( 'index.js' ) )
+        .pipe( gulp.dest( paths.build.scripts ) )
         .pipe( livereload() )
-
-    gulp.src( paths.src.jslib )
-        .pipe( concat( fileName ) )
-        .pipe( gulp.dest( paths.build.lib ) )
 })
 
 gulp.task( 'stylus', function() {
@@ -62,11 +62,67 @@ gulp.task( 'stylus', function() {
         .pipe( livereload() )
 })
 
+gulp.task( 'inject', function() {
+    var destName = global.DEBUG ? 'index' : 'index.' + 'min'
+
+    gulp.src( 'index.src.html' )
+        .pipe( rename( 'index.html' ) )
+        .pipe( inject( gulp.src(
+            paths.build.styles + destName + '.css', { read: false }),
+            { addRootSlash: false }))
+        .pipe( inject(
+            gulp.src( [
+                paths.build.lib + destName + '.js',
+                paths.build.scripts + destName + '.js'
+            ], { read: false }), { addRootSlash: false }))
+        .pipe( gulp.dest( '.' ) )
+})
+
 gulp.task( 'watch', function() {
+    global.DEBUG = true
+
     livereload.listen()
     gulp.watch( paths.src.scripts, [ 'scripts' ] )
     gulp.watch( paths.src.styles, [ 'stylus' ] )
     gulp.watch( 'index.html', [ 'default' ] )
+})
+
+gulp.task( 'minJS', function() {
+    var libDestPath     = paths.build.lib,
+        scriptsDestPath = paths.build.scripts
+
+    global.DEBUG = false
+
+    gulp.src( libDestPath + '*.js' )
+        .pipe( rename( 'index.min.js' ) )
+        .pipe( sourcemaps.init() )
+        .pipe( uglify() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( libDestPath ) )
+
+    gulp.src( scriptsDestPath + '*.js' )
+        .pipe( rename( 'index.min.js' ) )
+        .pipe( sourcemaps.init() )
+        .pipe( uglify() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( scriptsDestPath ) )
+})
+
+gulp.task( 'minCSS', [ 'inject' ], function() {
+    var stylsDestPath = paths.build.styles
+
+    global.DEBUG = false
+
+    gulp.src( stylsDestPath + 'index.css' )
+        .pipe( rename( 'index.min.css' ) )
+        .pipe( prefixer( {
+            browsers: [ 'last 2 versions' ],
+            cascade: false
+        } ))
+        .pipe( sourcemaps.init() )
+        .pipe( minifyCSS() )
+        .pipe( sourcemaps.write( '.' ) )
+        .pipe( gulp.dest( stylsDestPath ) )
 })
 
 gulp.task( 'convert', function() {
@@ -98,37 +154,8 @@ gulp.task( 'bower', function() {
         .pipe( gulp.dest( paths.src.lib ) )
 })
 
-gulp.task( 'min', function() {
-    var libDestPath     = paths.build.lib,
-        scriptsDestPath = paths.build.scripts,
-        stylsDestPath   = paths.build.styles
+gulp.task( 'min', [ 'minJS', 'minCSS', 'inject' ])
 
-    gulp.src( libDestPath + '*.js' )
-        .pipe( rename( 'index.min.js' ) )
-        .pipe( sourcemaps.init() )
-        .pipe( uglify() )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( libDestPath ) )
-
-    gulp.src( scriptsDestPath + '*.js' )
-        .pipe( rename( 'index.min.js' ) )
-        .pipe( sourcemaps.init() )
-        .pipe( uglify() )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( scriptsDestPath ) )
-
-    gulp.src( stylsDestPath + 'index.css' )
-        .pipe( rename( 'index.min.css' ) )
-        .pipe( prefixer( {
-            browsers: [ 'last 2 versions' ],
-            cascade: false
-        } ))
-        .pipe( sourcemaps.init() )
-        .pipe( minifyCSS() )
-        .pipe( sourcemaps.write( '.' ) )
-        .pipe( gulp.dest( stylsDestPath ) )
-})
-
-gulp.task( 'default', [ 'watch', 'scripts', 'stylus' ] )
+gulp.task( 'default', [ 'watch', 'scripts', 'stylus', 'inject' ] )
 
 gulp.task( 'make', [ 'convert', 'email' ] )
