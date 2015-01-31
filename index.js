@@ -1,29 +1,31 @@
-var fs         = require( 'fs' ),
-    nodemailer = require( 'nodemailer' ),
+'use strict'
 
-    fromAddress = 'sunnylost@gmail.com'
+let fs          = require( 'fs' ),
+    nodemailer  = require( 'nodemailer' ),
 
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: fromAddress,
-        pass: '' //INPUT PASSWORD
-    }
-})
+    config      = JSON.parse( fs.readFileSync( 'infos.json' ) ),
 
-var mailOptions = {
-    from: 'sunnylost<' + fromAddress + '>', // sender address
-    to: '', // list of receivers
-    subject: 'Web Weekly', // Subject line
-    html:  fs.readFileSync( 'contents/datas/2015-01-25.html', 'utf-8' )// html body
-};
+    fromAddress = config.sender.user,
 
-// send mail with defined transport object
-transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        console.log(error);
-    }else{
-        console.log('Message sent: ' + info.response);
-    }
-});
+    transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: config.sender
+    })
+
+
+fs.readFile( 'contents/email/2015-01-25.html', 'utf-8', function( err, content ) {
+    config.receivers.forEach( function( r ) {
+        transporter.sendMail({
+            from: 'sunnylost<' + fromAddress + '>',
+            to: r,
+            subject: 'Web Weekly',
+            html:  content
+        }, function( err, info ) {
+            if ( err ) {
+                console.error( err )
+            } else {
+                console.log( 'Send OK ' + r )
+            }
+        })
+    })
+} )
