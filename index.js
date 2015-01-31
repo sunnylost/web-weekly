@@ -1,6 +1,7 @@
 'use strict'
 
 let fs          = require( 'fs' ),
+    dateExtend  = require( 'date-extended' ),
     nodemailer  = require( 'nodemailer' ),
 
     config      = JSON.parse( fs.readFileSync( 'infos.json' ) ),
@@ -10,21 +11,23 @@ let fs          = require( 'fs' ),
     transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: config.sender
-    })
+    }),
+
+    curDate = dateExtend.format( new Date, 'yyyy-MM-dd' )
 
 
-fs.readFile( 'contents/email/2015-01-25.html', 'utf-8', function( err, content ) {
+fs.readFile( `contents/email/${curDate}.html`, 'utf-8', function( err, content ) {
     config.receivers.forEach( function( r ) {
         transporter.sendMail({
-            from: 'sunnylost<' + fromAddress + '>',
+            from: `sunnylost<${fromAddress}>`,
             to: r,
             subject: 'Web Weekly',
             html:  content
-        }, function( err, info ) {
+        }, function( err ) {
             if ( err ) {
                 console.error( err )
             } else {
-                console.log( 'Send OK ' + r )
+                console.log( `Send OK ${r}` )
             }
         })
     })
