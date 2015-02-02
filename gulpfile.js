@@ -154,7 +154,7 @@ gulp.task( 'bower', function() {
         .pipe( gulp.dest( paths.src.lib ) )
 })
 
-gulp.task( 'min', [ 'minJS', 'minCSS', 'inject' ])
+gulp.task( 'min', [ 'lib', 'minJS', 'minCSS', 'inject' ])
 
 gulp.task( 'default', [ 'watch', 'scripts', 'stylus', 'inject' ] )
 
