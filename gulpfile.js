@@ -17,7 +17,7 @@ var fs         = require( 'fs' ),
     dateExtend = require( 'date-extended' ),
     bower      = require( 'main-bower-files' ),
 
-    date   = new Date,// need manual edit
+    date   = new Date( 2015, 0, 31 ),// need manual edit
     mdName = dateExtend.format( date, 'yyyy-MM-dd' ),
 
     paths = {
@@ -138,6 +138,7 @@ gulp.task( 'email', [ 'convert' ], function() {
         .pipe( data(function() {
             return {
                 pageTitle: 'Web Weekly',
+                date: mdName,
                 content: String( fs.readFileSync( paths.indeterminate.markdown + mdFile ))
             }
         }))
