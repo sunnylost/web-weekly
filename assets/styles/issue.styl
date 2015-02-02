@@ -2,18 +2,18 @@
 
 body
   color #333
-  background-color #f0f0f0
+  background-color rgb(254, 254, 254)
   font-family "Helvetica Neue", Helvetica, Ubuntu, Arial, sans-serif
 
 ul
   padding 0
-  margin 0 0 30px 20px
+  margin 0 0 3rem 2rem
 
 article
-  width 650px
+  width 65rem
   height 100%
   margin auto
-  padding 2rem
+  padding 15rem 2rem 0
   background-color #fff
   overflow-y scroll
 
@@ -22,34 +22,42 @@ article
     border-top 0
 
   ul
-    padding-bottom 15px
-    border-bottom 1px dashed font-color
+    padding-bottom 1.5rem
+    border-bottom .1rem dashed font-color
 
   h1
-    height 40px
-    line-height 40px
-    padding 5px 10px
+    position absolute
+    top 0
+    left -16rem
+    width calc(100% + 16rem)
+    height 10rem
+    line-height 10rem
+    margin-top 1rem
+    padding .5rem 1rem
+    font-size 4rem
     color font-color
     background-color bg-color
+    text-align center
 
     em
-      float right
+      margin-left 6rem
       font-style normal
-      font-size 18px
+      font-size 1.8rem
 
   h2
-    padding-top 15px
+    padding-top 1.5rem
     color font-color
+    font-size 2rem
     font-weight normal
 
   li
-    font-size 16px
-    margin-bottom 10px
+    font-size 1.6rem
+    margin-bottom 1rem
     line-height 1.4
     list-style-type square
 
   a
-    padding 3px
+    padding .3rem
 
   a:hover
     color font-color
@@ -65,7 +73,7 @@ article
     font-size 85%
     padding .3em .5em
     line-height 1.5
-    border-radius 3px
+    border-radius .3rem
     color #fff
     background-color #c2606f
 

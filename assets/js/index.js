@@ -2,9 +2,31 @@
     "use strict"
 
     let $     = global.$,
-        fetch = global.fetch
+        fetch = global.fetch,
+        hash  = location.hash,
+        rdate = /^#\d{4}\-\d{2}\-\d{2}$/
 
-    fetch( 'contents/indeterminate/2015-01-25.html' )
+    fetch( 'datas.json' )
+        .then( resp =>
+            resp.json()
+        )
+        .then( data => {
+            let match, issue
+
+            if ( match = hash.match( rdate ) ) {
+                match = match[ 0 ]
+
+                issue = data.filter( date =>
+                    match == date
+                )
+
+                issue = issue.length ? issue[ 0 ] : data.pop()
+            } else {
+                issue = data.pop()
+            }
+
+            return fetch( `contents/indeterminate/${ issue }.html` )
+        })
         .then( resp =>
             resp.text()
         )
@@ -14,4 +36,9 @@
                 $( 'html' )[ 0 ].classList.add( 'loaded' )
             ,1000 )
         })
+        .catch( err =>
+            console.log( err )
+        )
+
+    "You came into a deserted place."
 }( window )
