@@ -39,6 +39,4 @@
         .catch( err =>
             console.log( err )
         )
-
-    "You came into a deserted place."
 }( window )

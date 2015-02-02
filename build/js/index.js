@@ -55,6 +55,4 @@
     })["catch"](function (err) {
         return console.log(err);
     });
-
-    "You came into a deserted place.";
 })(window);
