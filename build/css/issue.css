@@ -1,17 +1,17 @@
 body {
   color: #333;
-  background-color: #f0f0f0;
+  background-color: #fefefe;
   font-family: "Helvetica Neue", Helvetica, Ubuntu, Arial, sans-serif;
 }
 ul {
   padding: 0;
-  margin: 0 0 30px 20px;
+  margin: 0 0 3rem 2rem;
 }
 article {
-  width: 650px;
+  width: 65rem;
   height: 100%;
   margin: auto;
-  padding: 2rem;
+  padding: 15rem 2rem 0;
   background-color: #fff;
   overflow-y: scroll;
 }
@@ -20,34 +20,42 @@ article h2:first-type {
   border-top: 0;
 }
 article ul {
-  padding-bottom: 15px;
-  border-bottom: 1px dashed #e7b541;
+  padding-bottom: 1.5rem;
+  border-bottom: 0.1rem dashed #e7b541;
 }
 article h1 {
-  height: 40px;
-  line-height: 40px;
-  padding: 5px 10px;
+  position: absolute;
+  top: 0;
+  left: -16rem;
+  width: calc(100% + 16rem);
+  height: 10rem;
+  line-height: 10rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 4rem;
   color: #e7b541;
   background-color: #1d5a45;
+  text-align: center;
 }
 article h1 em {
-  float: right;
+  margin-left: 6rem;
   font-style: normal;
-  font-size: 18px;
+  font-size: 1.8rem;
 }
 article h2 {
-  padding-top: 15px;
+  padding-top: 1.5rem;
   color: #e7b541;
+  font-size: 2rem;
   font-weight: normal;
 }
 article li {
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
   line-height: 1.4;
   list-style-type: square;
 }
 article a {
-  padding: 3px;
+  padding: 0.3rem;
 }
 article a:hover {
   color: #e7b541;
@@ -63,7 +71,7 @@ article code {
   font-size: 85%;
   padding: 0.3em 0.5em;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0.3rem;
   color: #fff;
   background-color: #c2606f;
 }
