@@ -3,40 +3,59 @@
 
     let $     = global.$,
         fetch = global.fetch,
-        hash  = location.hash,
-        rdate = /^#\d{4}\-\d{2}\-\d{2}$/
+
+        htmlEl    = $( 'html' )[ 0 ],
+        articleEl = $( '#article' )[ 0 ],
+        rdate     = /#(\d{4}\-\d{2}\-\d{2})/,
+
+        LOAD_CLASS = 'loaded',
+
+        listData
 
     fetch( 'datas.json' )
         .then( resp =>
             resp.json()
         )
         .then( data => {
-            let match, issue
-
-            if ( match = hash.match( rdate ) ) {
-                match = match[ 0 ]
-
-                issue = data.filter( date =>
-                    match == date
-                )
-
-                issue = issue.length ? issue[ 0 ] : data.pop()
-            } else {
-                issue = data.pop()
-            }
-
-            return fetch( `contents/indeterminate/${ issue }.html` )
+            listData = data
+            navigate( location.hash )
         })
-        .then( resp =>
-            resp.text()
+
+    function filterName( data, name ) {
+        return data.filter( date =>
+            name == date
         )
-        .then( html => {
-            $( '#article' )[ 0 ].innerHTML = html
-            setTimeout( () =>
-                $( 'html' )[ 0 ].classList.add( 'loaded' )
-            ,1000 )
-        })
-        .catch( err =>
-            console.log( err )
-        )
+    }
+
+    function navigate( hash ) {
+        let match, issue,
+            last = listData[ listData.length - 1 ]
+
+        if ( match = hash.match( rdate ) ) {
+            match = match[ 1 ]
+
+            issue = filterName( listData, match )
+
+            issue = issue.length ? issue[ 0 ] : last
+        } else if ( hash == 'entries' ) {
+            //TODO
+        } else {
+            issue = last
+        }
+
+        htmlEl.classList.remove( LOAD_CLASS )
+        fetch( `contents/indeterminate/${ issue }.html` )
+            .then( resp => resp.text() )
+            .then( html => {
+                articleEl.innerHTML = html
+                setTimeout( () =>
+                    htmlEl.classList.add( LOAD_CLASS )
+                ,1000 )
+            })
+            .catch( err => console.log( err ) )
+    }
+
+    global.onhashchange = ( e ) => {
+        navigate( e.newURL )
+    }
 }( window )
