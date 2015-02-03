@@ -13,7 +13,6 @@ article {
   margin: auto;
   padding: 15rem 2rem 0;
   background-color: #fff;
-  overflow-y: scroll;
 }
 article h2:first-type {
   padding: 0;
