@@ -17,7 +17,7 @@ var fs         = require( 'fs' ),
     dateExtend = require( 'date-extended' ),
     bower      = require( 'main-bower-files' ),
 
-    date   = new Date( 2015, 0, 31 ),// need manual edit
+    date   = new Date,// need manual edit
     mdName = dateExtend.format( date, 'yyyy-MM-dd' ),
 
     paths = {
@@ -158,5 +158,3 @@ gulp.task( 'bower', function() {
 gulp.task( 'min', [ 'lib', 'minJS', 'minCSS', 'inject' ])
 
 gulp.task( 'default', [ 'watch', 'scripts', 'stylus', 'inject' ] )
-
-gulp.task( 'make', [ 'convert', 'email' ] )
