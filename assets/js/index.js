@@ -37,6 +37,7 @@
             issue = filterName( listData, match )
 
             issue = issue.length ? issue[ 0 ] : last
+
         } else if ( hash == 'entries' ) {
             //TODO
         } else {
