@@ -23,10 +23,6 @@ ul {
   padding: 0;
   border-top: 0;
 }
-#wrap ul {
-  padding-bottom: 15px;
-  border-bottom: 1px dashed #e7b541;
-}
 h1 {
   height: 40px;
   line-height: 40px;
@@ -40,27 +36,25 @@ h1 em {
   font-size: 18px;
 }
 h2 {
-  padding-top: 15px;
-  color: #e7b541;
-  font-weight: normal;
+  padding: 15px 0;
+  color: #f04530;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px dashed;
+  text-transform: uppercase;
 }
 li {
   font-size: 16px;
   margin-bottom: 10px;
-  line-height: 1.4;
+  line-height: 26px;
   list-style-type: square;
+  color: #888;
 }
 a {
-  padding: 3px;
-}
-a:hover {
-  color: #e7b541;
-  background-color: #1d5a45;
+  padding: 5px;
+  font-weight: bold;
+  color: #000;
   text-decoration: none;
-}
-a:hover code {
-  color: #e7b541;
-  background-color: #1d5a45;
 }
 code {
   font-family: monospace, monospace;
