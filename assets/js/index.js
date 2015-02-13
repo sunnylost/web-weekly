@@ -5,12 +5,21 @@
         fetch = global.fetch,
 
         htmlEl    = $( 'html' )[ 0 ],
+        bodyEl    = $( 'body' )[ 0 ],
         articleEl = $( '#article' )[ 0 ],
-        rdate     = /#(\d{4}\-\d{2}\-\d{2})/,
+        zombieEl  = $( '#zombie' )[ 0 ],
 
-        LOAD_CLASS = 'loaded',
+        cached    = {},
 
-        listData
+        rdate     = /(\d{4}\-\d{2}\-\d{2})/,
+        isArchivesShown = false,
+        hasArchives = false,
+
+        ARCHIVES       = 'archives',
+        ARCHIVES_SHOWN = 'archives-shown',
+        LOAD_CLASS     = 'loaded',
+
+        listData, archivesEl
 
     fetch( 'datas.json' )
         .then( resp =>
@@ -18,7 +27,8 @@
         )
         .then( data => {
             listData = data
-            navigate( location.hash )
+            navigate( location.hash.substring( 1 ) )
+            generatearchives()
         })
 
     function filterName( data, name ) {
@@ -33,30 +43,87 @@
 
         if ( match = hash.match( rdate ) ) {
             match = match[ 1 ]
-
             issue = filterName( listData, match )
-
             issue = issue.length ? issue[ 0 ] : last
-
-        } else if ( hash == 'entries' ) {
-            //TODO
         } else {
             issue = last
+        }
+
+        if ( cached[ issue ] ) {
+            return articleEl.innerHTML = cached[ issue ]
         }
 
         htmlEl.classList.remove( LOAD_CLASS )
         fetch( `contents/indeterminate/${ issue }.html` )
             .then( resp => resp.text() )
             .then( html => {
+                cached[ issue ] = html
                 articleEl.innerHTML = html
-                setTimeout( () =>
-                    htmlEl.classList.add( LOAD_CLASS )
+                setTimeout( () => {
+                        htmlEl.classList.add( LOAD_CLASS )
+                    }
                 ,1000 )
             })
             .catch( err => console.log( err ) )
     }
 
+    function generatearchives() {
+        let htmls = ''
+        archivesEl = document.createElement( 'ul' )
+
+        archivesEl.className = 'archives'
+        archivesEl.innerHTML = () => {
+            listData.forEach( d => {
+                htmls += `<li><a href="#${d}">${d}</a></li>`
+            })
+            return htmls
+        }()
+
+        bodyEl.appendChild( archivesEl )
+
+        hasArchives = true
+        archivesEl.onclick = ( e ) => {
+            if ( e.target.tagName.toLocaleLowerCase() == 'a' ) {
+                toggleArchives()
+            }
+        }
+
+        if ( location.hash.substring( 1 ) == ARCHIVES ) {
+            showArchives()
+        }
+    }
+
+    function toggleArchives() {
+        if ( hasArchives ) {
+            isArchivesShown ? hideArchives() : showArchives()
+        }
+    }
+
+    function hideArchives() {
+        htmlEl.classList.remove( ARCHIVES_SHOWN )
+        isArchivesShown = false
+    }
+
+    function showArchives() {
+        htmlEl.classList.add( ARCHIVES_SHOWN )
+        isArchivesShown = true
+    }
+
+    $( '#archives' )[ 0 ].onclick = () => toggleArchives()
+
+    global.onkeyup = ( e ) => {
+        e.keyCode == 27 && hideArchives()
+    }
+
     global.onhashchange = ( e ) => {
-        navigate( e.newURL )
+        let hash
+        zombieEl.href = e.newURL
+        hash = zombieEl.hash.substring( 1 )
+        if ( hash == ARCHIVES ) {
+            showArchives()
+        } else {
+            hideArchives()
+            navigate( hash )
+        }
     }
 }( window )
