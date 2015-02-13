@@ -24,16 +24,25 @@
     var $ = global.$,
         fetch = global.fetch,
         htmlEl = $("html")[0],
+        bodyEl = $("body")[0],
         articleEl = $("#article")[0],
-        rdate = /#(\d{4}\-\d{2}\-\d{2})/,
+        zombieEl = $("#zombie")[0],
+        cached = {},
+        rdate = /(\d{4}\-\d{2}\-\d{2})/,
+        isArchivesShown = false,
+        hasArchives = false,
+        ARCHIVES = "archives",
+        ARCHIVES_SHOWN = "archives-shown",
         LOAD_CLASS = "loaded",
-        listData = undefined;
+        listData = undefined,
+        archivesEl = undefined;
 
     fetch("datas.json").then(function (resp) {
         return resp.json();
     }).then(function (data) {
         listData = data;
-        navigate(location.hash);
+        navigate(location.hash.substring(1));
+        generatearchives();
     });
 
     function filterName(data, name) {
@@ -49,29 +58,89 @@
 
         if (match = hash.match(rdate)) {
             match = match[1];
-
             issue = filterName(listData, match);
-
             issue = issue.length ? issue[0] : last;
-        } else if (hash == "entries") {} else {
+        } else {
             issue = last;
+        }
+
+        if (cached[issue]) {
+            return articleEl.innerHTML = cached[issue];
         }
 
         htmlEl.classList.remove(LOAD_CLASS);
         fetch("contents/indeterminate/" + issue + ".html").then(function (resp) {
             return resp.text();
         }).then(function (html) {
+            cached[issue] = html;
             articleEl.innerHTML = html;
             setTimeout(function () {
-                return htmlEl.classList.add(LOAD_CLASS);
+                htmlEl.classList.add(LOAD_CLASS);
             }, 1000);
         })["catch"](function (err) {
             return console.log(err);
         });
     }
 
+    function generatearchives() {
+        var htmls = "";
+        archivesEl = document.createElement("ul");
+
+        archivesEl.className = "archives";
+        archivesEl.innerHTML = (function () {
+            listData.forEach(function (d) {
+                htmls += "<li><a href=\"#" + d + "\">" + d + "</a></li>";
+            });
+            return htmls;
+        })();
+
+        bodyEl.appendChild(archivesEl);
+
+        hasArchives = true;
+        archivesEl.onclick = function (e) {
+            if (e.target.tagName.toLocaleLowerCase() == "a") {
+                toggleArchives();
+            }
+        };
+
+        if (location.hash.substring(1) == ARCHIVES) {
+            showArchives();
+        }
+    }
+
+    function toggleArchives() {
+        if (hasArchives) {
+            isArchivesShown ? hideArchives() : showArchives();
+        }
+    }
+
+    function hideArchives() {
+        htmlEl.classList.remove(ARCHIVES_SHOWN);
+        isArchivesShown = false;
+    }
+
+    function showArchives() {
+        htmlEl.classList.add(ARCHIVES_SHOWN);
+        isArchivesShown = true;
+    }
+
+    $("#archives")[0].onclick = function () {
+        return toggleArchives();
+    };
+
+    global.onkeyup = function (e) {
+        e.keyCode == 27 && hideArchives();
+    };
+
     global.onhashchange = function (e) {
-        navigate(e.newURL);
+        var hash = undefined;
+        zombieEl.href = e.newURL;
+        hash = zombieEl.hash.substring(1);
+        if (hash == ARCHIVES) {
+            showArchives();
+        } else {
+            hideArchives();
+            navigate(hash);
+        }
     };
 })(window);
-//TODO
