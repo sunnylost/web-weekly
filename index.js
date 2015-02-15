@@ -13,8 +13,17 @@ let fs          = require( 'fs' ),
         auth: config.sender
     }),
 
-    curDate = dateExtend.format( new Date, 'yyyy-MM-dd' )
+    curDate = dateExtend.format( new Date, 'yyyy-MM-dd' ),
 
+    DATA_PATH = 'datas.json'
+
+fs.readFile( DATA_PATH, 'utf-8', function( err, content ) {
+    let data = JSON.parse( content )
+    if ( curDate != data[ data.length - 1 ] ) {
+        data.push( curDate )
+        fs.writeFile( DATA_PATH, JSON.stringify( data ) )
+    }
+})
 
 fs.readFile( `contents/email/${curDate}.html`, 'utf-8', function( err, content ) {
     config.receivers.forEach( function( r ) {

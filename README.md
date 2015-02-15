@@ -6,7 +6,7 @@ Collect news about web.
 
 1. Add a markdown file in `contents/source` directory
 2. Run `gulp convert`, this will generate a html file under `contents/indeterminate`
-3. Update `datas.json`, i know...this's so silly, i will fix this after awhile.
+3. <del>Update `datas.json`, i know...this's so silly, i will fix this after awhile.</del>
 
 ## How to send email
 
