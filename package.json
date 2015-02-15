@@ -1,6 +1,6 @@
 {
   "name": "web-weekly",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "author": "sunnylost",
   "description": "collect news about web.",
   "main": "index.js",
