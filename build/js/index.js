@@ -88,8 +88,8 @@
 
         archivesEl.className = "archives";
         archivesEl.innerHTML = (function () {
-            listData.forEach(function (d) {
-                htmls += "<li><a href=\"#" + d + "\">" + d + "</a></li>";
+            listData.forEach(function (d, i) {
+                htmls += "<li><a href=\"#" + d + "\">#" + (i + 1) + "</a></li>";
             });
             return htmls;
         })();
@@ -124,9 +124,7 @@
         isArchivesShown = true;
     }
 
-    $("#archives")[0].onclick = function () {
-        return toggleArchives();
-    };
+    $("#archives")[0].onclick = toggleArchives;
 
     global.onkeyup = function (e) {
         e.keyCode == 27 && hideArchives();
