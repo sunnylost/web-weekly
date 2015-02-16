@@ -73,8 +73,8 @@
 
         archivesEl.className = 'archives'
         archivesEl.innerHTML = () => {
-            listData.forEach( d => {
-                htmls += `<li><a href="#${d}">${d}</a></li>`
+            listData.forEach( ( d, i ) => {
+                htmls += `<li><a href="#${d}">#${i + 1}</a></li>`
             })
             return htmls
         }()
@@ -109,7 +109,7 @@
         isArchivesShown = true
     }
 
-    $( '#archives' )[ 0 ].onclick = () => toggleArchives()
+    $( '#archives' )[ 0 ].onclick = toggleArchives
 
     global.onkeyup = ( e ) => {
         e.keyCode == 27 && hideArchives()
