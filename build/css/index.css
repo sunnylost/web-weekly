@@ -218,6 +218,8 @@ nav {
 }
 .wrap {
   position: relative;
+  width: 1000px;
+  margin: auto;
   overflow: hidden;
 }
 body {
