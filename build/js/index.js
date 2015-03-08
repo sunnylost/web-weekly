@@ -37,7 +37,7 @@
         listData = undefined,
         archivesEl = undefined;
 
-    fetch("datas.json").then(function (resp) {
+    fetch("datas.json?t=" + +new Date()).then(function (resp) {
         return resp.json();
     }).then(function (data) {
         listData = data;

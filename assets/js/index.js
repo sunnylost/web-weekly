@@ -21,7 +21,7 @@
 
         listData, archivesEl
 
-    fetch( 'datas.json' )
+    fetch( 'datas.json?t=' + +( new Date ) )
         .then( resp =>
             resp.json()
         )
