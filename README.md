@@ -20,6 +20,7 @@ All contents are coming from these sites:
 
 * [Web Platform Daily](http://webplatformdaily.org/)
 * [JavaScript Weekly](http://javascriptweekly.com/)
+* [CSS Weekly](http://css-weekly.com/)
 * [HTML5 Weekly](http://html5weekly.com/)
 * [Mobile Web Weekly](http://mobilewebweekly.co/)
 * [Node Weekly](http://nodeweekly.com/)
