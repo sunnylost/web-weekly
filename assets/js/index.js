@@ -119,6 +119,7 @@
         let hash
         zombieEl.href = e.newURL
         hash = zombieEl.hash.substring( 1 )
+
         if ( hash == ARCHIVES ) {
             showArchives()
         } else {

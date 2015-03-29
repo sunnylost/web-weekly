@@ -218,7 +218,7 @@ nav {
 }
 .wrap {
   position: relative;
-  width: 1000px;
+  width: 100%;
   margin: auto;
   overflow: hidden;
 }
@@ -244,8 +244,8 @@ article h2:first-type {
 article h1 {
   position: absolute;
   top: 0;
-  left: -16rem;
-  width: calc(100% + 16rem);
+  left: 0;
+  width: 100%;
   height: 10rem;
   line-height: 10rem;
   margin-top: 1rem;
@@ -254,6 +254,7 @@ article h1 {
   color: #e7b541;
   background-color: #1d5a45;
   text-align: center;
+  overflow: hidden;
 }
 article h1 em {
   margin-left: 6rem;
@@ -298,6 +299,16 @@ article code {
   border-radius: 0.3rem;
   color: #fff;
   background-color: #c2606f;
+}
+@media screen and (max-width: 37.5rem) {
+  #article {
+    padding-top: 6rem;
+  }
+  #article h1 {
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 3rem;
+  }
 }
 #logo {
   position: relative;
@@ -356,33 +367,26 @@ article code {
   width: 15rem;
   height: 15rem;
   margin: auto;
-  border: 3px solid transparent;
-  border-top-color: #3498db;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
+  font-size: 0.5rem;
 }
-#overlay .loading::before,
-#overlay .loading::after {
-  content: "";
+#overlay .loading div {
   position: absolute;
-  border: 3px solid transparent;
+  width: 100%;
+  height: 100%;
+  border: 1em solid;
   border-radius: 50%;
+  animation: ripple 1.5s 0s infinite cubic-bezier(0, 0, 0.54, 1.06);
 }
-#overlay .loading::before {
-  left: 1rem;
-  top: 1rem;
-  width: 13rem;
-  height: 13rem;
-  border-top-color: #e74c3c;
-  animation: spin 1.5s linear infinite;
+#overlay .loading div:first-child {
+  border-color: #e74c3c;
 }
-#overlay .loading::after {
-  top: 2rem;
-  left: 2rem;
-  width: 11rem;
-  height: 11rem;
-  border-top-color: #f9c922;
-  animation: spin 3s linear infinite;
+#overlay .loading div:nth-child(2) {
+  border-color: #f9c922;
+  animation-delay: 0.2s;
+}
+#overlay .loading div:last-child {
+  border-color: #3498db;
+  animation-delay: 0.4s;
 }
 .loaded,
 .loaded body {
@@ -393,39 +397,59 @@ article code {
   opacity: 0;
   pointer-events: none;
 }
-.loaded #overlay .loading {
+.loaded #overlay .loading > div {
   animation: none;
 }
-@-moz-keyframes spin {
+@-moz-keyframes ripple {
   0% {
-    transform: rotate(0deg);
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 0;
   }
 }
-@-webkit-keyframes spin {
+@-webkit-keyframes ripple {
   0% {
-    transform: rotate(0deg);
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 0;
   }
 }
-@-o-keyframes spin {
+@-o-keyframes ripple {
   0% {
-    transform: rotate(0deg);
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 0;
   }
 }
-@keyframes spin {
+@keyframes ripple {
   0% {
-    transform: rotate(0deg);
+    transform: scale(0.1);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 0;
   }
 }
 .archives {
@@ -437,7 +461,9 @@ article code {
   bottom: 0;
   padding: 5rem;
   margin: 0;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
   background-color: rgba(10,10,10,0.8);
   overflow: auto;
   opacity: 0;
@@ -446,7 +472,7 @@ article code {
   transform: scale(0);
 }
 .archives li {
-  width: 50%;
+  width: 28%;
   height: 10rem;
   line-height: 10rem;
   margin: 1rem;
@@ -470,28 +496,34 @@ article code {
   height: 100%;
   overflow: hidden;
 }
+.archives-shown body {
+  height: 100%;
+  overflow: hidden;
+}
 .archives-shown .archives {
   opacity: 1;
   z-index: 1;
   transform: scale(1);
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 100rem) {
   .archives li {
     width: 33%;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 50rem) {
   .archives li {
     width: 33%;
   }
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 37.5rem) {
   .archives {
-    flex-direction: column;
-    justify-content: flex-start;
+    display: block;
+    oveflow-y: scroll;
   }
   .archives li {
-    width: 100%;
+    width: 90%;
+    height: 5rem;
+    line-height: 5rem;
     font-size: 3rem;
   }
 }

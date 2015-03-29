@@ -1,6 +1,6 @@
 var fs         = require( 'fs' ),
     gulp       = require( 'gulp' ),
-    to5        = require( 'gulp-6to5' ),
+    to5        = require( 'gulp-babel' ),
     prefixer   = require( 'gulp-autoprefixer' ),
     concat     = require( 'gulp-concat' ),
     data       = require( 'gulp-data' ),
@@ -116,8 +116,7 @@ gulp.task( 'minCSS', [ 'inject' ], function() {
     gulp.src( stylsDestPath + 'index.css' )
         .pipe( rename( 'index.min.css' ) )
         .pipe( prefixer( {
-            browsers: [ 'last 2 versions' ],
-            cascade: false
+            browsers: [ '> 5%', 'ios 7' ]
         } ))
         .pipe( sourcemaps.init() )
         .pipe( minifyCSS() )

@@ -13,32 +13,26 @@
     width 15rem
     height 15rem
     margin auto
-    border 3px solid transparent
-    border-top-color #3498db
-    border-radius 50%
-    animation spin 2s linear infinite
+    font-size .5rem
 
-    &::before, &::after
-      content ""
+    & div
       position absolute
-      border 3px solid transparent
+      width 100%
+      height 100%
+      border 1em solid
       border-radius 50%
+      animation ripple 1.5s 0s infinite cubic-bezier(0, 0, 0.54, 1.06)
 
-    &::before
-      left 1rem
-      top 1rem
-      width 13rem
-      height 13rem
-      border-top-color #e74c3c
-      animation spin 1.5s linear infinite
+      &:first-child
+        border-color #e74c3c
 
-    &::after
-      top 2rem
-      left 2rem
-      width 11rem
-      height 11rem
-      border-top-color #f9c922
-      animation spin 3s linear infinite
+      &:nth-child(2)
+        border-color #f9c922
+        animation-delay .2s
+
+      &:last-child
+        border-color #3498db
+        animation-delay .4s
 
 .loaded
   &, body
@@ -49,12 +43,21 @@
     opacity 0
     pointer-events none
 
-    .loading
+    .loading > div
       animation none
 
-@keyframes spin
-  0%
-    transform rotate( 0deg )
+@keyframes ripple {
+  0% {
+    transform : scale(.1);
+    opacity : 1;
+  }
 
-  100%
-    transform rotate( 360deg )
+  70% {
+    opacity : .8;
+  }
+
+  100% {
+    transform : scale(1);
+    opacity : 0;
+  }
+}

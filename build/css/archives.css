@@ -7,7 +7,9 @@
   bottom: 0;
   padding: 5rem;
   margin: 0;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
   background-color: rgba(10,10,10,0.8);
   overflow: auto;
   opacity: 0;
@@ -16,7 +18,7 @@
   transform: scale(0);
 }
 .archives li {
-  width: 50%;
+  width: 28%;
   height: 10rem;
   line-height: 10rem;
   margin: 1rem;
@@ -40,28 +42,34 @@
   height: 100%;
   overflow: hidden;
 }
+.archives-shown body {
+  height: 100%;
+  overflow: hidden;
+}
 .archives-shown .archives {
   opacity: 1;
   z-index: 1;
   transform: scale(1);
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 100rem) {
   .archives li {
     width: 33%;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 50rem) {
   .archives li {
     width: 33%;
   }
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 37.5rem) {
   .archives {
-    flex-direction: column;
-    justify-content: flex-start;
+    display: block;
+    oveflow-y: scroll;
   }
   .archives li {
-    width: 100%;
+    width: 90%;
+    height: 5rem;
+    line-height: 5rem;
     font-size: 3rem;
   }
 }
