@@ -29,4 +29,7 @@ All contents are coming from these sites:
 * [Echo JS](http://www.echojs.com/)
 * [Twitter](http://twitter.com)
 * [Smashing Magazine](http://www.smashingmagazine.com/)
+* [GitHub Trending](https://github.com/trending?l=javascript)
+* [Chromium Status](http://www.chromestatus.com/features)
+* [IE Status](https://status.modern.ie/)
 
