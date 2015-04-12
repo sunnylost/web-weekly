@@ -156,4 +156,5 @@ gulp.task( 'bower', function() {
 
 gulp.task( 'min', [ 'lib', 'minJS', 'minCSS', 'inject' ])
 
+gulp.task( 'run', [ 'convert', 'email' ] )
 gulp.task( 'default', [ 'watch', 'scripts', 'stylus', 'inject' ] )
