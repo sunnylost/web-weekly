@@ -5,14 +5,14 @@ Collect news about web.
 ## How to build content
 
 1. Add a markdown file in `contents/source` directory
-2. Run `gulp convert`, this will generate a html file under `contents/indeterminate`
-3. <del>Update `datas.json`, i know...this's so silly, i will fix this after awhile.</del>
+2. Run `gulp run`, this contains two steps:
+    1. it will generate a html file under `contents/indeterminate`
+    2. and generate a html file under `contents/email`
 
 ## How to send email
 
 1. Make sure you have a `infos.json` under root directory, it must contains your email address and password.
-2. Run `gulp email`, this will generate a html file under `contents/email`
-3. Run `iojs index.js`, this will send that html file to the receivers.
+2. Run `iojs index.js`, this will send that html file to the receivers.
 
 ## Content Sources
 
