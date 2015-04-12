@@ -26,7 +26,7 @@ fs.readFile( DATA_PATH, 'utf-8', function( err, content ) {
 })
 
 fs.readFile( `contents/email/${curDate}.html`, 'utf-8', function( err, content ) {
-    config.test.forEach( function( r ) {
+    config.receivers.forEach( function( r ) {
         transporter.sendMail({
             from: `sunnylost<${fromAddress}>`,
             to: r,
