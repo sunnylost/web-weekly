@@ -1,130 +1,105 @@
-~function( global ) {
-    "use strict"
+let global          = window,
+    $               = global.$,
+    fetch           = global.fetch,
 
-    let $     = global.$,
-        fetch = global.fetch,
+    htmlEl          = $( 'html' )[ 0 ],
+    bodyEl          = $( 'body' )[ 0 ],
+    articleEl       = $( '#article' )[ 0 ],
+    zombieEl        = $( '#zombie' )[ 0 ],
 
-        htmlEl    = $( 'html' )[ 0 ],
-        bodyEl    = $( 'body' )[ 0 ],
-        articleEl = $( '#article' )[ 0 ],
-        zombieEl  = $( '#zombie' )[ 0 ],
+    cached          = {},
 
-        cached    = {},
+    rdate           = /(\d{4}\-\d{2}\-\d{2})/,
+    isArchivesShown = false,
+    hasArchives     = false,
 
-        rdate     = /(\d{4}\-\d{2}\-\d{2})/,
-        isArchivesShown = false,
-        hasArchives = false,
+    ARCHIVES        = 'archives',
+    ARCHIVES_SHOWN  = 'archives-shown',
+    LOAD_CLASS      = 'loaded',
+    newDate         = +( new Date ),
 
-        ARCHIVES       = 'archives',
-        ARCHIVES_SHOWN = 'archives-shown',
-        LOAD_CLASS     = 'loaded',
+    navigate, generatearchives, toggleArchives, hideArchives, showArchives,
+    listData, archivesEl
 
-        listData, archivesEl
+fetch( `datas.json?t=${newDate}` )
+    .then( resp => resp.json() )
+    .then( data => {
+        listData = data
+        navigate( location.hash.substring( 1 ) )
+        generatearchives()
+    } )
 
-    fetch( 'datas.json?t=' + +( new Date ) )
-        .then( resp =>
-            resp.json()
-        )
-        .then( data => {
-            listData = data
-            navigate( location.hash.substring( 1 ) )
-            generatearchives()
-        })
+navigate = hash => {
+    let match, issue,
+        last = listData[ listData.length - 1 ]
 
-    function filterName( data, name ) {
-        return data.filter( date =>
-            name == date
-        )
+    if ( match = hash.match( rdate ) ) {
+        match = match[ 1 ]
+        issue = listData.filter( date => date == match )
+        issue = issue.length ? issue[ 0 ] : last
+    } else {
+        issue = last
     }
 
-    function navigate( hash ) {
-        let match, issue,
-            last = listData[ listData.length - 1 ]
-
-        if ( match = hash.match( rdate ) ) {
-            match = match[ 1 ]
-            issue = filterName( listData, match )
-            issue = issue.length ? issue[ 0 ] : last
-        } else {
-            issue = last
-        }
-
-        if ( cached[ issue ] ) {
-            return articleEl.innerHTML = cached[ issue ]
-        }
-
-        htmlEl.classList.remove( LOAD_CLASS )
-        fetch( `contents/indeterminate/${ issue }.html` )
-            .then( resp => resp.text() )
-            .then( html => {
-                cached[ issue ] = html
-                articleEl.innerHTML = html
-                setTimeout( () => {
-                        htmlEl.classList.add( LOAD_CLASS )
-                    }
-                ,1000 )
-            })
-            .catch( err => console.log( err ) )
+    if ( cached[ issue ] ) {
+        return articleEl.innerHTML = cached[ issue ]
     }
 
-    function generatearchives() {
-        let htmls = ''
-        archivesEl = document.createElement( 'ul' )
+    htmlEl.classList.remove( LOAD_CLASS )
 
-        archivesEl.className = 'archives'
-        archivesEl.innerHTML = () => {
-            listData.forEach( ( d, i ) => {
-                htmls += `<li><a href="#${d}">#${i + 1}</a></li>`
-            })
-            return htmls
-        }()
+    fetch( `contents/indeterminate/${ issue }.html` )
+        .then( resp => resp.text() )
+        .then( rawHtml => {
+            cached[ issue ] = articleEl.innerHTML = rawHtml
+            setTimeout( () => htmlEl.classList.add( LOAD_CLASS ), 1000 )
+        } )
+}
 
-        bodyEl.appendChild( archivesEl )
+generatearchives = () => {
+    archivesEl           = document.createElement( 'ul' )
+    archivesEl.className = 'archives'
+    archivesEl.innerHTML = listData.map( ( value, i ) => {
+        return `<li><a href="#${value}">#${i + 1}</a></li>`
+    } ).join( '' )
+    bodyEl.appendChild( archivesEl )
 
-        hasArchives = true
-        archivesEl.onclick = ( e ) => {
-            if ( e.target.tagName.toLocaleLowerCase() == 'a' ) {
-                toggleArchives()
-            }
-        }
-
-        if ( location.hash.substring( 1 ) == ARCHIVES ) {
-            showArchives()
+    hasArchives        = true
+    archivesEl.onclick = ( e ) => {
+        if ( e.target.tagName.toLocaleLowerCase() == 'a' ) {
+            toggleArchives()
         }
     }
 
-    function toggleArchives() {
-        if ( hasArchives ) {
-            isArchivesShown ? hideArchives() : showArchives()
-        }
+    if ( location.hash.substring( 1 ) == ARCHIVES ) {
+        showArchives()
     }
+}
 
-    function hideArchives() {
-        htmlEl.classList.remove( ARCHIVES_SHOWN )
-        isArchivesShown = false
+toggleArchives = () => hasArchives && isArchivesShown ? hideArchives() : showArchives()
+
+hideArchives = () => {
+    htmlEl.classList.remove( ARCHIVES_SHOWN )
+    isArchivesShown = false
+}
+
+showArchives = () => {
+    htmlEl.classList.add( ARCHIVES_SHOWN )
+    isArchivesShown = true
+}
+
+$( '#archives' )[ 0 ].onclick = toggleArchives
+
+global.onkeyup = e => e.keyCode == 27 && hideArchives()
+
+global.onhashchange = e => {
+    let hash
+    zombieEl.href = e.newURL
+    hash          = zombieEl.hash.substring( 1 )
+
+    if ( hash == ARCHIVES ) {
+        showArchives()
+    } else {
+        hideArchives()
+        navigate( hash )
     }
-
-    function showArchives() {
-        htmlEl.classList.add( ARCHIVES_SHOWN )
-        isArchivesShown = true
-    }
-
-    $( '#archives' )[ 0 ].onclick = toggleArchives
-
-    global.onkeyup = ( e ) => {
-        e.keyCode == 27 && hideArchives()
-    }
-
-    global.onhashchange = ( e ) => {
-        let hash
-        zombieEl.href = e.newURL
-        hash = zombieEl.hash.substring( 1 )
-
-        if ( hash == ARCHIVES ) {
-            showArchives()
-        } else {
-            hideArchives()
-            navigate( hash )
-        }
-    }
-}( window )
+}

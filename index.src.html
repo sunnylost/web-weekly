@@ -29,6 +29,10 @@
         </div>
     </div>
     <a id="zombie" style="display: none;"></a>
+    <script>
+        /* 原生 fetch 会产生乱码 */
+        self.fetch = null;
+    </script>
     <!-- inject:js -->
     <!-- endinject -->
 </body>
